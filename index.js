@@ -7,39 +7,23 @@ const buttonLength = document.querySelectorAll("button").length
     let snare = new Audio(`sounds/snare.mp3`);
     let kick = new Audio(`sounds/kick-bass.mp3`);
 
-document.addEventListener("keydown", e=>console.log(e))
-
 document.addEventListener("keydown", e =>{
-    switch (e.key) {
-        case "w":
-            tom1.play()
-            break;
-        case "a":
-            tom2.play()
-            break;
-        case "s":
-            tom3.play()
-            break;
-        case "d":
-            tom4.play()
-            break;
-        case "j":
-            crash.play()
-            break;
-        case "k":
-            snare.play()
-            break;
-        case "l":
-            kick.play()
-            break;
-    }
+    makeSound(e.key)
+    buttonAnimation(e.key)
 })
 
 for (let i = 0; i < buttonLength; i++) {
     document.querySelectorAll("button")[i].addEventListener("click", function () {
-        this.style.color="white"  
-   
-        switch (this.innerHTML) {
+        let buttonInnerHTML = this.innerHTML
+        makeSound(buttonInnerHTML)
+        buttonAnimation(buttonInnerHTML)
+    })
+
+}
+
+    function makeSound(key){
+
+        switch (key) {
             
             case "w":
                 tom1.play()
@@ -49,25 +33,28 @@ for (let i = 0; i < buttonLength; i++) {
                 break;
             case "s":
                 tom3.play()
-                this.style.color="red"
                 break;
             case "d":
                 tom4.play()
-                this.style.color="red"
                 break;
             case "j":
                 crash.play()
-                this.style.color="red"
                 break;
             case "k":
                 snare.play()
-                this.style.color="red"
                 break;
             case "l":
                 kick.play()
-                this.style.color="red"
                 break;
         }
-    })
+    }
 
-}
+    function buttonAnimation(currentKey) {
+        let activeKey = document.querySelector(`.${currentKey}`)
+        console.log(activeKey.className)
+        activeKey.classList.add("pressed");
+
+        setTimeout(()=>{
+            activeKey.classList.remove("pressed");
+    }, 70);
+    }
